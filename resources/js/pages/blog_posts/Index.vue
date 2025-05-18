@@ -212,7 +212,6 @@ watch(statusFilter, debouncedSearch);
                                 v-for="(link, i) in blog_posts.links"
                                 :key="i"
                                 :href="link.url"
-                                v-html="link.label"
                                 :class="[
                                     link.active
                                         ? 'relative z-10 inline-flex items-center bg-blue-600 px-4 py-2 text-sm font-medium text-white focus:z-20'
@@ -221,7 +220,11 @@ watch(statusFilter, debouncedSearch);
                                     i === 0 ? 'rounded-l-md' : '',
                                     i === blog_posts.links.length - 1 ? 'rounded-r-md' : '',
                                 ]"
-                            />
+                            >
+                                <span v-if="link.label === '&laquo; Previous'">&laquo; Previous</span>
+                                <span v-else-if="link.label === 'Next &raquo;'">Next &raquo;</span>
+                                <span v-else v-html="link.label.replace(/(<([^>]+)>)/gi, '')"></span>
+                            </Link>
                         </nav>
                     </div>
                 </div>
